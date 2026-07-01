@@ -1,0 +1,61 @@
+<svg viewBox="0 0 1000 480" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow4" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#374151"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="480" fill="#f8fafc"/>
+  <text x="500" y="28" text-anchor="middle" font-size="18" font-weight="700" fill="#111827">Sequence: POST /qa/ask</text>
+
+  <!-- lifelines -->
+  <g font-size="12" font-weight="600" fill="#1f2937">
+    <text x="80" y="58" text-anchor="middle">React</text>
+    <text x="260" y="58" text-anchor="middle">FastAPI Router</text>
+    <text x="460" y="58" text-anchor="middle">QAService</text>
+    <text x="640" y="58" text-anchor="middle">FAISS</text>
+    <text x="800" y="58" text-anchor="middle">Gemini API</text>
+    <text x="930" y="58" text-anchor="middle">Postgres</text>
+  </g>
+  <g stroke="#cbd5e1" stroke-width="1.5">
+    <line x1="80" y1="66" x2="80" y2="450"/>
+    <line x1="260" y1="66" x2="260" y2="450"/>
+    <line x1="460" y1="66" x2="460" y2="450"/>
+    <line x1="640" y1="66" x2="640" y2="450"/>
+    <line x1="800" y1="66" x2="800" y2="450"/>
+    <line x1="930" y1="66" x2="930" y2="450"/>
+  </g>
+
+  <g font-size="11" fill="#1f2937">
+    <line x1="80" y1="90" x2="260" y2="90" stroke="#374151" stroke-width="1.5" marker-end="url(#arrow4)"/>
+    <text x="170" y="84" text-anchor="middle">POST /qa/ask {"{"}question{"}"}, JWT</text>
+
+    <line x1="260" y1="120" x2="460" y2="120" stroke="#374151" stroke-width="1.5" marker-end="url(#arrow4)"/>
+    <text x="360" y="114" text-anchor="middle">ask(user, question)</text>
+
+    <line x1="460" y1="150" x2="800" y2="150" stroke="#374151" stroke-width="1.5" marker-end="url(#arrow4)"/>
+    <text x="630" y="144" text-anchor="middle">embed_query(question)</text>
+    <line x1="800" y1="175" x2="460" y2="175" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow4)"/>
+    <text x="630" y="169" text-anchor="middle">query embedding vector</text>
+
+    <line x1="460" y1="205" x2="640" y2="205" stroke="#374151" stroke-width="1.5" marker-end="url(#arrow4)"/>
+    <text x="550" y="199" text-anchor="middle">search(top_k=4)</text>
+    <line x1="640" y1="230" x2="460" y2="230" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow4)"/>
+    <text x="550" y="224" text-anchor="middle">top-k chunks + filenames</text>
+
+    <line x1="460" y1="260" x2="800" y2="260" stroke="#374151" stroke-width="1.5" marker-end="url(#arrow4)"/>
+    <text x="630" y="254" text-anchor="middle">generate_answer(question, context)</text>
+    <line x1="800" y1="285" x2="460" y2="285" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow4)"/>
+    <text x="630" y="279" text-anchor="middle">generated answer text</text>
+
+    <line x1="460" y1="315" x2="930" y2="315" stroke="#374151" stroke-width="1.5" marker-end="url(#arrow4)"/>
+    <text x="695" y="309" text-anchor="middle">INSERT query_logs (question, response_time)</text>
+
+    <line x1="460" y1="345" x2="260" y2="345" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow4)"/>
+    <text x="360" y="339" text-anchor="middle">{"{"}answer, sources{"}"}</text>
+
+    <line x1="260" y1="375" x2="80" y2="375" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow4)"/>
+    <text x="170" y="369" text-anchor="middle">200 OK JSON</text>
+  </g>
+
+  <text x="500" y="430" text-anchor="middle" font-size="11" fill="#9ca3af">If no documents exist, QAService raises NoDocumentsError → global handler returns 404 before any Gemini call.</text>
+</svg>

@@ -1,0 +1,69 @@
+<svg viewBox="0 0 1000 480" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#6b7280"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="480" fill="#f8fafc"/>
+  <text x="500" y="30" text-anchor="middle" font-size="18" font-weight="700" fill="#111827">Database Schema (PostgreSQL, managed by Alembic)</text>
+
+  <!-- users table -->
+  <g>
+    <rect x="60" y="70" width="240" height="220" rx="8" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+    <rect x="60" y="70" width="240" height="34" rx="8" fill="#2563eb"/>
+    <text x="180" y="93" text-anchor="middle" font-size="14" font-weight="700" fill="white">users</text>
+    <g font-size="12" fill="#1f2937">
+      <text x="74" y="122">id</text><text x="280" y="122" text-anchor="end">PK, int</text>
+      <text x="74" y="144">email</text><text x="280" y="144" text-anchor="end">unique, indexed</text>
+      <text x="74" y="166">hashed_password</text><text x="280" y="166" text-anchor="end">string</text>
+      <text x="74" y="188">full_name</text><text x="280" y="188" text-anchor="end">nullable</text>
+      <text x="74" y="210">created_at</text><text x="280" y="210" text-anchor="end">datetime</text>
+      <text x="74" y="232">updated_at</text><text x="280" y="232" text-anchor="end">datetime</text>
+    </g>
+  </g>
+
+  <!-- documents table -->
+  <g>
+    <rect x="380" y="70" width="270" height="330" rx="8" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+    <rect x="380" y="70" width="270" height="34" rx="8" fill="#16a34a"/>
+    <text x="515" y="93" text-anchor="middle" font-size="14" font-weight="700" fill="white">documents</text>
+    <g font-size="12" fill="#1f2937">
+      <text x="394" y="122">id</text><text x="636" y="122" text-anchor="end">PK, int</text>
+      <text x="394" y="144">owner_id</text><text x="636" y="144" text-anchor="end">FK → users.id</text>
+      <text x="394" y="166">filename</text><text x="636" y="166" text-anchor="end">indexed</text>
+      <text x="394" y="188">file_size</text><text x="636" y="188" text-anchor="end">int, bytes</text>
+      <text x="394" y="210">file_type</text><text x="636" y="210" text-anchor="end">string, e.g. .pdf</text>
+      <text x="394" y="232">num_chunks</text><text x="636" y="232" text-anchor="end">int</text>
+      <text x="394" y="254">processing_status</text><text x="636" y="254" text-anchor="end">enum</text>
+      <text x="394" y="276">processing_time</text><text x="636" y="276" text-anchor="end">float, seconds</text>
+      <text x="394" y="298">created_at</text><text x="636" y="298" text-anchor="end">datetime</text>
+      <text x="394" y="320">updated_at</text><text x="636" y="320" text-anchor="end">datetime</text>
+      <text x="394" y="350" font-style="italic" fill="#6b7280">status: pending / processing /</text>
+      <text x="394" y="368" font-style="italic" fill="#6b7280">completed / failed</text>
+    </g>
+  </g>
+
+  <!-- query_logs table -->
+  <g>
+    <rect x="730" y="70" width="220" height="170" rx="8" fill="#ffffff" stroke="#d97706" stroke-width="1.5"/>
+    <rect x="730" y="70" width="220" height="34" rx="8" fill="#d97706"/>
+    <text x="840" y="93" text-anchor="middle" font-size="14" font-weight="700" fill="white">query_logs</text>
+    <g font-size="12" fill="#1f2937">
+      <text x="744" y="122">id</text><text x="936" y="122" text-anchor="end">PK, int</text>
+      <text x="744" y="144">owner_id</text><text x="936" y="144" text-anchor="end">FK → users.id</text>
+      <text x="744" y="166">question</text><text x="936" y="166" text-anchor="end">string</text>
+      <text x="744" y="188">response_time</text><text x="936" y="188" text-anchor="end">float, seconds</text>
+      <text x="744" y="210">created_at</text><text x="936" y="210" text-anchor="end">datetime</text>
+    </g>
+  </g>
+
+  <!-- relations -->
+  <line x1="300" y1="150" x2="380" y2="150" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow3)"/>
+  <text x="340" y="142" text-anchor="middle" font-size="11" fill="#6b7280">1 : N</text>
+
+  <line x1="300" y1="200" x2="380" y2="200" stroke="#6b7280" stroke-width="0" />
+  <path d="M 300 230 C 500 230, 600 230, 730 150" fill="none" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrow3)"/>
+  <text x="540" y="225" text-anchor="middle" font-size="11" fill="#6b7280">1 : N (users → query_logs)</text>
+
+  <text x="500" y="430" text-anchor="middle" font-size="11" fill="#9ca3af">FAISS vector indexes live outside Postgres, on disk per user (storage/vectors/&lt;user_id&gt;/), keyed by document_id in metadata.</text>
+</svg>
